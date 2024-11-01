@@ -11,7 +11,7 @@ import View from '@/components/View';
 
 const md = markdownit()
 
-export const experimental_ppr = true;
+export const experimental_ppr = true
 
 const Startup = async ({ params }: { params: Promise<{ id: string }> }) => {
 
