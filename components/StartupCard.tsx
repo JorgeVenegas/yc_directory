@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button'
 import { formatDate } from '@/lib/utils'
-import { Author, Startup, STARTUP_QUERYResult } from '@/sanity/types'
+import { Author, Startup, STARTUPS_QUERYResult } from '@/sanity/types'
 import { EyeIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-export type StartupCardType = Omit<Startup, "author"> & { author: Author }
+export type StartupCardType = STARTUPS_QUERYResult[0]
 
 const StartupCard = ({ post }: { post: StartupCardType }) => {
     const {
