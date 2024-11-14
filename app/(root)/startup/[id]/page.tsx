@@ -18,10 +18,12 @@ const Startup = async ({ params }: { params: Promise<{ id: string }> }) => {
 
     const id = (await params).id
 
-    const [post, { select: editorPicks }] = await Promise.all([
+    const [post, playlist] = await Promise.all([
         client.fetch(STARTUP_BY_ID_QUERY, { id }),
         client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks" })
     ])
+
+    const editorPicks =  playlist?.select
 
     console.log(editorPicks)
 
@@ -81,7 +83,7 @@ const Startup = async ({ params }: { params: Promise<{ id: string }> }) => {
 
                 <hr className='divider' />
 
-                {editorPicks.length > 0 && (
+                {editorPicks && editorPicks.length > 0 && (
                     <div className='max-w-4xl mx-auto'>
                         <p className='text-30-semibold'>Editor Picks</p>
                         <ul className='mt-7 card_grid-sm'>
