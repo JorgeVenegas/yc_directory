@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn, formatDate } from '@/lib/utils'
-import { Author, Startup, STARTUPS_QUERYResult } from '@/sanity/types'
+import { STARTUPS_QUERYResult } from '@/sanity/types'
 import { EyeIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -45,7 +45,7 @@ const StartupCard = ({ post }: { post: StartupCardType }) => {
                     </Link>
                 </div>
                 <Link href={`/user/${author?._id}`}>
-                    <Image src={author?.image!} alt={author?.name!} width={48} height={48} className='rounded-full' />
+                    <Image src={author?.image as string} alt={author?.name as string} width={48} height={48} className='rounded-full' />
                 </Link>
             </div>
             <Link href={`/startup/${_id}`}>

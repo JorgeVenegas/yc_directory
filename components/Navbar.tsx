@@ -1,6 +1,6 @@
 import { auth, signIn, signOut } from '@/auth'
 import { Avatar } from '@/components/ui/avatar'
-import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
+import { AvatarImage } from '@radix-ui/react-avatar'
 import { BadgePlus, LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
