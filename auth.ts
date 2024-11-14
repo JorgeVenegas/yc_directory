@@ -1,4 +1,4 @@
-import { AUTHOR_BY_GITHUB_ID_QUERY } from "@/lib/queries";
+import { AUTHOR_BY_GITHUB_ID_QUERY } from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
 import { writeClient } from "@/sanity/lib/write-client";
 import NextAuth from "next-auth"

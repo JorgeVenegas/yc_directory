@@ -1,4 +1,4 @@
-import { STARTUP_BY_ID_QUERY } from '@/lib/queries';
+import { PLAYLIST_BY_SLUG_QUERY, STARTUP_BY_ID_QUERY } from '@/sanity/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { client } from '@/sanity/lib/client';
 import Image from 'next/image';
@@ -8,6 +8,7 @@ import React, { Suspense } from 'react'
 import markdownit from "markdown-it"
 import { Skeleton } from '@/components/ui/skeleton';
 import View from '@/components/View';
+import StartupCard, { StartupCardType } from '@/components/StartupCard';
 
 const md = markdownit()
 
@@ -17,7 +18,12 @@ const Startup = async ({ params }: { params: Promise<{ id: string }> }) => {
 
     const id = (await params).id
 
-    const post = await client.fetch(STARTUP_BY_ID_QUERY, { id })
+    const [post, { select: editorPicks }] = await Promise.all([
+        client.fetch(STARTUP_BY_ID_QUERY, { id }),
+        client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks" })
+    ])
+
+    console.log(editorPicks)
 
     if (!post) return notFound();
 
@@ -72,14 +78,25 @@ const Startup = async ({ params }: { params: Promise<{ id: string }> }) => {
                         </p>
                     ]}
                 </div>
+
                 <hr className='divider' />
 
-                { /* TODO: PICKS */}
-            </section>
+                {editorPicks.length > 0 && (
+                    <div className='max-w-4xl mx-auto'>
+                        <p className='text-30-semibold'>Editor Picks</p>
+                        <ul className='mt-7 card_grid-sm'>
+                            {editorPicks.map((post: StartupCardType, index: number) => (
+                                <StartupCard key={index} post={post} />
+                            ))}
+                        </ul>
+                    </div>
+                )}
 
-            <Suspense fallback={<Skeleton className='view_skeleton' />}>
-                <View id={id} />
-            </Suspense>
+                <Suspense fallback={<Skeleton className='view_skeleton' />}>
+                    <View id={id} />
+                </Suspense>
+
+            </section>
         </>
     )
 }
